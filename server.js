@@ -50,13 +50,13 @@ app.use(cookieParser());
  * register and login routes
  */
 
-// app.get('/register', (req, res) => {
-//   res.sendFile(path.join(__dirname, 'public/register.html'));
-// });
-//
-// app.get('/login', (req, res) => {
-//   res.sendFile(path.join(__dirname, 'public/login.html'));
-// });
+app.get('/register', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/register.html'));
+});
+
+app.get('/login', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/login.html'));
+});
 
 
 /**
