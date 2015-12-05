@@ -21,6 +21,13 @@ let app = express();
 
 
 /**
+ * routes modules
+ */
+
+let userRoutes = require('./routes/userroutes');
+
+
+/**
  * static path configuration
  */
 
@@ -38,17 +45,12 @@ app.use(cookieParser());
 
 
 /**
- * root route
+ * HTML rendering routes
  */
 
 // app.get('/', (req, res) => {
 //   res.sendFile(path.join(__dirname, 'public/index.html'));
 // });
-
-
-/**
- * register and login routes
- */
 
 app.get('/register', (req, res) => {
   res.sendFile(path.join(__dirname, 'public/register.html'));
@@ -57,6 +59,13 @@ app.get('/register', (req, res) => {
 app.get('/login', (req, res) => {
   res.sendFile(path.join(__dirname, 'public/login.html'));
 });
+
+
+/**
+ * API routes
+ */
+
+app.use('/users', userRoutes);
 
 
 /**
