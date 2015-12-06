@@ -21,10 +21,21 @@ let app = express();
 
 
 /**
+ * db configuration
+ */
+
+mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/instagramAppDB')
+let db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', (callback) => {
+  console.log('mongoose connected');
+});
+
+/**
  * routes modules
  */
 
-let userRoutes = require('./routes/userroutes');
+let userRoutes = require('./routes/usersRoutes');
 
 
 /**
@@ -48,9 +59,9 @@ app.use(cookieParser());
  * HTML rendering routes
  */
 
-// app.get('/', (req, res) => {
-//   res.sendFile(path.join(__dirname, 'public/index.html'));
-// });
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/index.html'));
+});
 
 app.get('/register', (req, res) => {
   res.sendFile(path.join(__dirname, 'public/register.html'));
