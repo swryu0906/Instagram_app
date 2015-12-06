@@ -18,6 +18,13 @@ router.route('/')
     userCtrl.createUser
   );
 
+// login
+router.post('/login', (req, res) => {
+      console.log(req.body);
+      res.json(req.body);
+    }
+  );
+
 router.route('/:id')
   // retrieve a user by id
   .get(
@@ -31,6 +38,5 @@ router.route('/:id')
   .delete(
     userCtrl.deleteUser
   );
-
 
 module.exports = router;

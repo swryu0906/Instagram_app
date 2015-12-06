@@ -24,6 +24,7 @@ let getAllUsers = (req, res) => {
 
 // create a user
 let createUser = (req, res) => {
+  console.log(req.body);
   let newObject = new User(req.body);
   newObject.save((err, newUser) => {
     if (err) {
@@ -34,18 +35,19 @@ let createUser = (req, res) => {
         error: err
       });
     } else {
-      return res.status(200).json({
-        success: true,
-        message: 'New user was successfully created',
-        user: newUser
-      });
+      // return res.status(200).json({
+      //   success: true,
+      //   message: 'New user was successfully created',
+      //   user: newUser
+      // });
+      return res.status(200).redirect('/');
     }
   });
 }
 
 // retrieve one user
 let getUser = (req, res) => {
-  User.find({ _id: req.params.id }, (err, user) => {
+  User.find({ _id: req.params.id }, (err, users) => {
     if (err) {
       console.log('Error: ' + err);
       return res.status(401).json({
@@ -56,7 +58,7 @@ let getUser = (req, res) => {
     } else {
       return res.status(200).json({
         success: true,
-        user: user
+        user: users[0]
       });
     }
   });
