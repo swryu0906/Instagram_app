@@ -1,0 +1,47 @@
+extends layout
+
+block content
+
+  // Modal md
+  #modal-md.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel')
+    .modal-dialog(role='document')
+      .modal-content
+        .modal-header
+          button.close(type='button', data-dismiss='modal', aria-label='Close')
+            span(aria-hidden='true') ×
+          h1#modal-label.modal-title
+        .modal-body
+          form(action='/users', method='POST')
+            h2.text-center Sign Up
+            h3.text-center It's free and always will be
+            .form-group
+              label Username
+              input.form-control(type='text', name='username', placeholder='Username')
+            .form-group
+              label First name
+              input.form-control(type='text', name='firstName', placeholder='First name')
+            .form-group
+              label Last name
+              input.form-control(type='text', name='lastName', placeholder='Last name')
+            .form-group
+              label Middle name
+              input.form-control(type='text', name='middleName', placeholder='Middle name')
+            .form-group
+              label Email address
+              input.form-control(type='email', name='email', placeholder='Email')
+            .form-group
+              label Password
+              input.form-control(type='password', name='password', placeholder='Password')
+            .form-group
+              label Password Confirmation
+              input.form-control(type='password', name='passwordConfirmation', placeholder='Password Confirmation')
+            .form-group
+              a.btn.btn-link.form-control(href='/local-login') Already have an account? Log into the existing account
+            button.btn.btn-primary(type='submit') Submit
+        .modal-footer
+          button.btn.btn-default(type='button', data-dismiss='modal') Close
+
+  include ./includes/footer.jade
+
+  // Log-in/Sign-up modal javascript
+  script(type='text/javascript', src='/javascripts/login.js')

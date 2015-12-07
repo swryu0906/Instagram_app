@@ -1,0 +1,26 @@
+doctype html
+html
+  head
+    meta(charset='utf-8')
+    title Instagram App
+    // Bootstrap core CSS
+    link(rel='stylesheet', href='/stylesheets/bootstrap.css')
+    // lightbox CSS
+    link(rel='stylesheet', href='/stylesheets/lightbox.css')
+    // Custom stylesheet
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    // JQuery core javascript
+    script(type='text/javascript', src='/javascripts/jquery-1.11.3.js')
+    // Bootstrap core javascript
+    script(type='text/javascript', src='/javascripts/bootstrap.js')
+    // Angular module javascript
+    script(type='text/javascript', src='/javascripts/app.js')
+  body
+    include ./includes/navbar.jade
+
+    .container-fluid
+      .col-md-10.col-md-offset-1
+
+        block content
+
+    script(src='/javascripts/lightbox.js')

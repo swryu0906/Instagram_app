@@ -5,19 +5,18 @@ let bcrypt = require('bcrypt');
 
 const  SALT_WORK_FACTOR = 10;
 
-
 /**
  * User model schema
  */
 
 let userSchema = new mongoose.Schema({
   username: { type: String, required: true },
-  name: { type: String, required: true },
-  // name: {
-  //   firstName: { type: String, required: true },
-  //   lastName: { type: String, required: true },
-  //   middleName: { type: String }
-  // },
+  // name: { type: String, required: true },
+  name: {
+    firstName: { type: String, required: true },
+    lastName: { type: String, required: true },
+    middleName: { type: String }
+  },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   // photos: [
@@ -29,7 +28,7 @@ let userSchema = new mongoose.Schema({
 
 
 /**
- * saving created_at, updated_at and hashed password
+ * save created_at, updated_at and hashed password
  */
 
 userSchema.pre('save', function(next) { // function expression is needed
@@ -59,9 +58,11 @@ userSchema.pre('save', function(next) { // function expression is needed
  * comparePassword method for comparing a plain text password with hashed one
  */
 
-userSchema.methods.comparePassword = (password, callback) => {
-  // bcrypt.compare is a method which will return a boolean,
-  bcrypt.compare(password, this.password, (err, isMatch) => {
+userSchema.methods.comparePassword = function(candidatePassword, callback) {
+  // bcrypt.compare is a method which will return a boolean value
+  // after comparing a plain text password with the hashed password
+  let currentUser = this;
+  bcrypt.compare(candidatePassword, currentUser.password, (err, isMatch) => {
     callback(null, isMatch);
   });
 };

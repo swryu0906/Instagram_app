@@ -2,7 +2,7 @@
 
 let express = require('express');
 let router = express.Router();
-let userCtrl = require('../controllers/usersController');
+let usersCtrl = require('../controllers/usersController');
 
 /**
  * users CRUD routes
@@ -11,32 +11,41 @@ let userCtrl = require('../controllers/usersController');
 router.route('/')
   // retrieve all users
   .get(
-    userCtrl.getAllUsers
+    usersCtrl.getAllUsers
   )
   // create a new user
   .post(
-    userCtrl.createUser
+    usersCtrl.createUser
   );
 
-// login
-router.post('/login', (req, res) => {
-      console.log(req.body);
-      res.json(req.body);
-    }
+
+// log out
+router.route('/logout')
+  .get(
+    usersCtrl.logout
   );
+
+
+// log in
+router.route('/login')
+
+  .post(
+    usersCtrl.login
+  );
+
 
 router.route('/:id')
   // retrieve a user by id
   .get(
-    userCtrl.getUser
+    usersCtrl.getUser
   )
   // update the user
   .put(
-    userCtrl.updateUser
+    usersCtrl.updateUser
   )
   // delete the user
   .delete(
-    userCtrl.deleteUser
+    usersCtrl.deleteUser
   );
 
 module.exports = router;
