@@ -62,7 +62,7 @@ app.use(express.static(path.join(__dirname, 'public')));
  */
 
 let usersRoutes = require('./routes/usersRoutes');
-
+let yelpRoutes = require('./routes/yelpRoutes');
 
 /**
  * express-session configuration
@@ -149,10 +149,11 @@ app.get('/local-login', (req, res) => {
 
 
 /**
- * users routes
+ * users and searches routes
  */
 
 app.use('/users', usersRoutes);
+app.use('/yelp', yelpRoutes)
 
 
 /**
@@ -163,5 +164,5 @@ let server = app.listen(process.env.PORT || 3000, () => {
   let host = server.address().address;
   let port = server.address().port;
 
-  console.log('Instagram App is running', 'host: ' + host, 'port: ' + port);
+  console.log('Local Business Search App is running', 'host: ' + host, 'port: ' + port);
 });

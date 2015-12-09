@@ -1,0 +1,11 @@
+.col-md-12
+  .col-md-9
+    h2= title
+    each media, i in medias
+      .col-md-4
+        a(href='#{ media.images.low_resolution.url }')
+          img(src='#{ media.images.low_resolution.url }')
+        small.meta Posted By: #{ media.user.username } on #{ media.created_time }
+  .col-md-3
+    if isInstagramLoggedIn
+      h5 Welcome #{ user.full_name } (#{ user.username })
