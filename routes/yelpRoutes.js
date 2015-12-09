@@ -2,7 +2,7 @@
 
 let express = require('express');
 let router = express.Router();
-let searchesCtrl = require('../controllers/yelpController');
+let yelpCtrl = require('../controllers/yelpController');
 
 
 /**
@@ -12,7 +12,17 @@ let searchesCtrl = require('../controllers/yelpController');
 // retrieve Yelp search results
 router.route('/search')
   .get(
-    searchesCtrl.yelp
+    yelpCtrl.search
+  );
+
+router.route('/phone_search')
+  .get(
+    yelpCtrl.phone_search
+  );
+
+router.route('/business_search')
+  .get(
+    yelpCtrl.business_search
   );
 
 module.exports = router;

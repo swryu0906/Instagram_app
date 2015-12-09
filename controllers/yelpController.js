@@ -14,14 +14,22 @@ const YELP_CONSUMER_KEY = process.env.YELP_CONSUMER_KEY;
 const YELP_CONSUMER_SECRET = process.env.YELP_CONSUMER_SECRET;
 const YELP_TOKEN = process.env.YELP_TOKEN;
 const YELP_TOKEN_SECRET = process.env.YELP_TOKEN_SECRET ;
-const YELP_API_URL = 'https://api.yelp.com/v2/search/?';
 
+// Yelp OAuth 1.0
+let oauth = {
+  consumer_key: YELP_CONSUMER_KEY,
+  consumer_secret: YELP_CONSUMER_SECRET,
+  token: YELP_TOKEN,
+  token_secret: YELP_TOKEN_SECRET,
+};
 
 /**
- * Yelp search API
+ * Yelp local search API
  */
 
-let yelp = (req, res, next) => {
+let search = (req, res, next) => {
+
+  const YELP_API_SEARCH_URL = 'https://api.yelp.com/v2/search/?';
 
   let searchQuery = '';
   if (req.query.location) searchQuery += 'location=' + req.query.location + '&';
@@ -39,15 +47,65 @@ let yelp = (req, res, next) => {
   if (searchQuery.charAt(searchQuery.length - 1) === '&') searchQuery = searchQuery.substring(0, searchQuery.length - 1)
 
 
-  let url = YELP_API_URL + searchQuery;
+  let url = YELP_API_SEARCH_URL + searchQuery;
 
-  // Yelp OAuth 1.0
-  let oauth = {
-    consumer_key: YELP_CONSUMER_KEY,
-    consumer_secret: YELP_CONSUMER_SECRET,
-    token: YELP_TOKEN,
-    token_secret: YELP_TOKEN_SECRET,
-  };
+  // // Yelp OAuth 1.0
+  // let oauth = {
+  //   consumer_key: YELP_CONSUMER_KEY,
+  //   consumer_secret: YELP_CONSUMER_SECRET,
+  //   token: YELP_TOKEN,
+  //   token_secret: YELP_TOKEN_SECRET,
+  // };
+
+  request.get({ url: url, oauth: oauth }, (error, response, body) => {
+    res.send(body);
+  });
+};
+
+/**
+ * Yelp business search API
+ */
+
+let business_search = (req, res, next) => {
+
+  const YELP_API_BUSINESS_SEARCH_URL = 'https://api.yelp.com/v2/business/';
+
+  let searchQuery = '';
+  if (req.query.business_id) searchQuery += req.query.business_id + '?';
+  if (req.query.cc) searchQuery += 'cc=' + req.query.cc + '&';
+  if (req.query.lang) searchQuery += 'lang=' + req.query.lang + '&';
+  if (req.query.lang_filter) searchQuery += 'lang_filter=' + req.query.lang_filter + '&';
+  if (req.query.actionlinks) searchQuery += 'actionlinks=' + req.query.actionlinks;
+
+  // remove the last '&' character in searchQuery
+  if (searchQuery.charAt(searchQuery.length - 1) === '&') searchQuery = searchQuery.substring(0, searchQuery.length - 1)
+
+
+  let url = YELP_API_BUSINESS_SEARCH_URL + searchQuery;
+
+  request.get({ url: url, oauth: oauth }, (error, response, body) => {
+    res.send(body);
+  });
+};
+
+/**
+ * Yelp phone search API
+ */
+
+let phone_search = (req, res, next) => {
+
+  const YELP_API_PHONE_SEARCH_URL = 'https://api.yelp.com/v2/phone_search/?';
+
+  let searchQuery = '';
+  if (req.query.phone) searchQuery += 'phone=' + req.query.phone + '&';
+  if (req.query.category) searchQuery += 'category=' + req.query.category + '&';
+  if (req.query.cc) searchQuery += 'cc=' + req.query.cc;
+
+  // remove the last '&' character in searchQuery
+  if (searchQuery.charAt(searchQuery.length - 1) === '&') searchQuery = searchQuery.substring(0, searchQuery.length - 1)
+
+
+  let url = YELP_API_PHONE_SEARCH_URL + searchQuery;
 
   request.get({ url: url, oauth: oauth }, (error, response, body) => {
     res.send(body);
@@ -56,5 +114,7 @@ let yelp = (req, res, next) => {
 
 
 module.exports = {
-  yelp: yelp
+  search: search,
+  business_search: business_search,
+  phone_search: phone_search
 }
